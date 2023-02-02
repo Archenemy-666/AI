@@ -7,3 +7,5 @@ to see tab spaces
 E S SW
 E NW S
 N E F
+
+Working on the code 
