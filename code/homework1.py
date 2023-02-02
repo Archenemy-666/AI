@@ -25,6 +25,10 @@ def create():
             blueprint[col][row] = temp
     print()
 '''
+def North(loc,row,col):
+    loc = 
+    
+
 maze = create()
 print(maze)
 #buildMaze(blueprint)
