@@ -1,0 +1,37 @@
+Homework 1  Simple State Space Search
+
+You may use any non-proprietary programming language (e.g. Python, Java, C++). You will be asked to submit pseudocode and a screencapture video to assist with assessment.  You can find pseudocode for the algorithms in the text here: https://github.com/aimacode/aima-pseudocode
+
+The problem is an example of a link maze called "Spanish Rice".
+
+It uses a maze that once appeared as the monthly maze competition, in May 2018, [http://www.mazelog.com/show?TDLinks to an external site.](http://www.mazelog.com/show?TD)
+
+This is a variant of the arrow mazes (see [Arrow Mazes Links to an external site.](http://www.mazelog.com/show?24)) in which you reverse direction at each arrow.
+
+Start on the arrow in the top left corner and follow its head to any of the arrows it's pointing to. From one of these arrows now move in the direction pointed to by its tail to any of the arrows it points to, for any distance
+
+Continue in this way, alternating between following the head and tail of each arrow, and find the shortest route to the target in the bottom right corner:
+
+Note that this can be a "hard" maze to solve by hand - especially as mazes get larger, but should be straightforward to program.
+
+**GOAL:**  Solve this as an example of uninformed state space search, inclluding breadth first, depth first, and iterative deepening and compare the results for mazes of a variety of sizes.  For this puzzle, the cost of all edges is the same regardless of length.
+
+**Nodes:** Nodes combine a state with a link to the predecessor and the edge (link) cost. You can also track other values, as needed.
+
+**States**:  States should keep track of: information about each cell, such as:  xloc, yloc, headDirection, tailDirection, and the outgoing match type is one of {head, tail}  depending on the preceding state. 
+
+**Successors:**   Match types will alternate.  **Edges may be of any length.** You may code this as one function or a set whose results you filter or combine. The image below gives and example of successors.
+
+You can assume that the starting cell will always be top left (0,0), and the goal cell will be bottom right, (n-1,n-1)
+
+Functions for Part 1:
+
+1.  Write a function for reading in a dimension value n and n2 arrows, which should be labelled corresponding to the direction of the head of the arrow (N, S, E, W, NE, NW, SE, SW), where items are given sequentially in row order (that is ordered according to the sequence of integers used. (You will test your functions with small values of n before trying the main puzzle.)
+2.  Write a function for printing out your internal representation as a square maze,  in some readable format.  It should also be able to show a solved maze.
+3.  Implement successor funchion called EXPAND where the successor function provides, for each node given as input  the  nodes that can be reached by extending the path from the node. Edges may go horizontally, vertically, or diagonally within a normal grid and have **any length** as long as do not extend beyond the bounds of the grid and obey the constraints of arrow matching. Your successor function can be "smart" by immediately pruning states that cannot lead to a goal. (If you make yours "smarter" then describe what you did in the writeup, keeping track of the number of states explored in your naive vs. smartest versions.)
+4.  Write a function to keep track of the total number of edges in the path, and the total number of states "visited" (including those you abandoned because they led to dead ends).
+5.  Write functions for solving a maze using: **breadth-first, search,  depth-first search, and iterative deepening**.  To provide the solution, the function can set a global variable e.g. *BFSsolution* as a sequence of cells, that is mapped to integers by a separate function. Functions should **return** a list of the following values:  a binary value (Y/N) indicating whether the maze was solved, the length of the solution in terms of the number of edges in the solution path (or -1 if no solution), the pathcost of the solution (or -1), and the total number of edges considered (including ones not part of the final solution). If you consider the same edge multiple times, increment the count each time. Note that each square can be entered twice (once from a head and once from a tail) so the total number of steps is bounded by 2n2
+6.  Write a function solutionAsList(cell_list) to map a *solution* given as a list of states or cells onto a list of integers as in the original problem specification given by mazelog.com
+7.  Write a driver function to test your solver  functions with mazes of a variety of sizes,  for each of the search functions and store the results, including path lengths and niumber of explored states, to an output file (along with the name of the input file and the strategy used)  so that they can be reviewed later.
+8.  Create a writeup that includes: a) psuedocode descriptions of your: NODE, EXPAND (instantiated with specific actions and their results), and IS-GOAL functions (and your main search functions);  b) a table of your results and  c) a discussion of what would be the best way to solve this problem, justified by the outcome from your experiments.
+9.  Create a screencapture demo (with voice narration) showing how your system performs on a variety of cases (e.g., simple solved, complex solved, unsolved).
