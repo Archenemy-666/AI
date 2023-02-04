@@ -21,16 +21,18 @@ def create():
 
 # considering the [['E', 'S', 'SW'], ['E', 'NW', 'S'], ['N', 'E', 'F']] maze graph directions
 #building the successor function 
-def successor(cr,cc,matrix,successors,visited,path):
-    
+def successor(cr,cc,matrix,successors,visited):
+# include path removed for now
+
+
     #adding visited list
     #creating the range of movement 
     #if the direction is east the movement should only be lateral increment i.e. column + range(1 to (size of matrix))
-    tsuc = []
+    # tsuc = []
     if (cr,cc) not in visited:
         visited.append((cr,cc))
         print(visited)
-
+    #adding path to be explored
     if (cr,cc) not in path:
         path.append((cr,cc))
         print(path)
@@ -40,27 +42,86 @@ def successor(cr,cc,matrix,successors,visited,path):
 
     if (matrix[cr][cc] == 'N'):
         for tr in range(1,len(matrix)):
-          temp = cr - tr
-          if temp in range (0,len(matrix)):
+          north = cr - tr
+          if north in range (0,len(matrix)):
                 #print(matrix[cr - tr][cc])
                 print(cr-tr)
-                successors.append(matrix[cr-tr][cc])
-                tsuc.append(matrix[cr-tr][cc])
-                if len(tsuc) == 0
-                    tsuc.pop()
+                successors.append(matrix[north][cc])
+                tsuc.append(matrix[north][cc])
+                if not len(tsuc) == 0:
+                    path.append(cr,cc)
 
+    if (matrix[cr][cc] == 'S'):
+        for tc in range(1,len(matrix)):
+            print(cr+tr)
+            south = cr + tr
+            if south in range (0,len(matrix)):
+                print(matrix[south][cc]) 
+                successors.append(matrix[south][cc])
 
     if (matrix[cr][cc] == 'E'):
         for tc in range(1,len(matrix)):
-            print(cc+tc)
-            print(matrix[cr][cc+tc]) 
-            successors.append(matrix[cr][cc+tc])
+            east = cc+tc
+            if east in range (0,len(matrix)):
+                print(matrix[cr][east]) 
+                successors.append(matrix[cr][cc+tc])
+
+    if (matrix[cr][cc] == 'W'):
+        for tc in range(1,len(matrix)):
+            west = (cc-tc)
+            if west in range (0,len(matrix)):
+                print(matrix[cr][west]) 
+                successors.append(matrix[cr][west])
+
+    if (matrix[cr][cc] == 'NE'):
+        for tr in range(1,len(matrix)):
+            for tc in range(1,len(matrix)):
+                northeastR = cr - tr
+                northeastC = cc + tc
+                if (northeastR,northeastC) in range (0,len(matrix)):
+                    print(matrix[northeastR][northEastC]) 
+                    successors.append(matrix[NorthEastR][NorthEastC])
+
+    if (matrix[cr][cc] == 'NW'):
+        for tr in range(1,len(matrix)):
+            for tc in range(1,len(matrix)):
+                northwestR = cr - tr
+                northwestC = cc - tc
+                print(northwestC,northwestR)
+                if northwestR in range (0,len(matrix)) and  northwestC in range (0,len(matrix)):
+                    print(matrix[northwestR][northwestC]) 
+                    successors.append(matrix[northwestR][northwestC])
+
+    if (matrix[cr][cc] == 'SE'):
+        for tr in range(1,len(matrix)):
+            for tc in range(1,len(matrix)):
+                southeastR = cr + tr
+                southeastC = cc + tc
+                if (southeastR,southeastC) in range (0,len(matrix)):
+                    print(matrix[southeastR][southEastC]) 
+                    successors.append(matrix[southEastR][southEastC])
+
+
+    if (matrix[cr][cc] == 'SW'):
+        for tr in range(1,len(matrix)):
+            for tc in range(1,len(matrix)):
+                southwestR = cr + tr
+                southWestC = cc - tr
+                if (southwestR,southwestC) in range (0,len(matrix)):
+                    print(matrix[southwestR][southwestC]) 
+                    successors.append(matrix[southwestR][southwestC])
+
+
 #----------------------------------------------------------
+
+#function to check if the child 
+
 
 #main function
 maze = create()
+#dynamic path that only considers the nodes that has branches
 path = []
 visited = []
 successors = []
-successor(1,0,maze,successors,visited)
+successor(1,1,maze,successors,visited)
 print(successors)
