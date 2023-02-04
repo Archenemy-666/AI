@@ -21,19 +21,35 @@ def create():
 
 # considering the [['E', 'S', 'SW'], ['E', 'NW', 'S'], ['N', 'E', 'F']] maze graph directions
 #building the successor function 
-def successor(cr,cc,matrix,successors):
+def successor(cr,cc,matrix,successors,visited,path):
+    
+    #adding visited list
     #creating the range of movement 
     #if the direction is east the movement should only be lateral increment i.e. column + range(1 to (size of matrix))
+    tsuc = []
+    if (cr,cc) not in visited:
+        visited.append((cr,cc))
+        print(visited)
+
+    if (cr,cc) not in path:
+        path.append((cr,cc))
+        print(path)
+
     if(matrix[cr][cc] == 'F'):
         return;
-    
+
     if (matrix[cr][cc] == 'N'):
         for tr in range(1,len(matrix)):
-           # if not (cr - tr) < 0 and (cr - tr) > len(matrix)-1 :
+          temp = cr - tr
+          if temp in range (0,len(matrix)):
                 #print(matrix[cr - tr][cc])
                 print(cr-tr)
                 successors.append(matrix[cr-tr][cc])
-           #----issu above set only stores unique values use stack---# 
+                tsuc.append(matrix[cr-tr][cc])
+                if len(tsuc) == 0
+                    tsuc.pop()
+
+
     if (matrix[cr][cc] == 'E'):
         for tc in range(1,len(matrix)):
             print(cc+tc)
@@ -43,6 +59,8 @@ def successor(cr,cc,matrix,successors):
 
 #main function
 maze = create()
+path = []
+visited = []
 successors = []
-successor(2,0,maze,successors)
+successor(1,0,maze,successors,visited)
 print(successors)
