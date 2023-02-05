@@ -75,41 +75,44 @@ def successor(cr,cc,matrix,successors,visited):
 
     if (matrix[cr][cc] == 'NE'):
         for tr in range(1,len(matrix)):
-            for tc in range(1,len(matrix)):
-                northeastR = cr - tr
-                northeastC = cc + tc
-                if (northeastR,northeastC) in range (0,len(matrix)):
-                    print(matrix[northeastR][northEastC]) 
-                    successors.append(matrix[NorthEastR][NorthEastC])
+            #for tc in range(1,len(matrix)):
+               # if(tr == tc):
+                    northeastR = cr - tr
+                    northeastC = cc + tr
+                    if northeastR in range (0,len(matrix)) and northeastC in range (0,len(matrix)):
+                        print(matrix[northeastR][northEastC]) 
+                        successors.append(matrix[NorthEastR][NorthEastC])
 
     if (matrix[cr][cc] == 'NW'):
         for tr in range(1,len(matrix)):
-            for tc in range(1,len(matrix)):
-                northwestR = cr - tr
-                northwestC = cc - tc
-                print(northwestC,northwestR)
-                if northwestR in range (0,len(matrix)) and  northwestC in range (0,len(matrix)):
-                    print(matrix[northwestR][northwestC]) 
-                    successors.append(matrix[northwestR][northwestC])
+            #for tc in range(1,len(matrix)):
+               # if(tr == tc):
+                    northwestR = cr - tr
+                    northwestC = cc - tr
+                    if northwestR in range (0,len(matrix)) and  northwestC in range (0,len(matrix)):
+                        print(matrix[northwestR][northwestC]) 
+                        successors.append(matrix[northwestR][northwestC])
 
     if (matrix[cr][cc] == 'SE'):
         for tr in range(1,len(matrix)):
-            for tc in range(1,len(matrix)):
-                southeastR = cr + tr
-                southeastC = cc + tc
-                if (southeastR,southeastC) in range (0,len(matrix)):
-                    print(matrix[southeastR][southEastC]) 
-                    successors.append(matrix[southEastR][southEastC])
+           # for tc in range(1,len(matrix)):
+                #if(tr == tc): # for only symmetric diagnol movement
+                    southeastR = cr + tr
+                    southeastC = cc + tr
+                    if southeastR in range (0,len(matrix)) and southeastC in range (0,len(matrix)):
+                    #print(matrix[southeastR][southEastC])
+                        successors.append(matrix[southEastR][southEastC])
 
 
     if (matrix[cr][cc] == 'SW'):
         for tr in range(1,len(matrix)):
-            for tc in range(1,len(matrix)):
-                southwestR = cr + tr
-                southWestC = cc - tr
-                if (southwestR,southwestC) in range (0,len(matrix)):
-                    print(matrix[southwestR][southwestC]) 
-                    successors.append(matrix[southwestR][southwestC])
+            #for tc in range(1,len(matrix)):
+                #if (tr == tc): # only diagnol movement not a unsymmetric diagnol
+                    southwestR = cr + tr
+                    southwestC = cc - tr
+                    if southwestR in range (0,len(matrix)) and southwestC in range (0,len(matrix)):
+                        print(southwestR,southwestC)
+                        successors.append(matrix[southwestR][southwestC])
 
 
 #----------------------------------------------------------
