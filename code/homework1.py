@@ -38,7 +38,8 @@ def successor(cr,cc,matrix,successors,visited):
         print(path)
 
     if(matrix[cr][cc] == 'F'):
-        return;
+        sucessor.append(matrix[cr][cc])
+        return successor
 
     if (matrix[cr][cc] == 'N'):
         for tr in range(1,len(matrix)):
@@ -48,8 +49,8 @@ def successor(cr,cc,matrix,successors,visited):
                 print(cr-tr)
                 successors.append(matrix[north][cc])
                 tsuc.append(matrix[north][cc])
-                if not len(tsuc) == 0:
-                    path.append(cr,cc)
+                #if not len(tsuc) == 0:
+                   # path.append(cr,cc)
 
     if (matrix[cr][cc] == 'S'):
         for tc in range(1,len(matrix)):
@@ -64,7 +65,7 @@ def successor(cr,cc,matrix,successors,visited):
             east = cc+tc
             if east in range (0,len(matrix)):
                 print(matrix[cr][east]) 
-                successors.append(matrix[cr][cc+tc])
+                successors.append([cr,east]) # testing on converting list of location to location
 
     if (matrix[cr][cc] == 'W'):
         for tc in range(1,len(matrix)):
@@ -101,7 +102,7 @@ def successor(cr,cc,matrix,successors,visited):
                     southeastC = cc + tr
                     if southeastR in range (0,len(matrix)) and southeastC in range (0,len(matrix)):
                     #print(matrix[southeastR][southEastC])
-                        successors.append(matrix[southEastR][southEastC])
+                        successors.append(matrix[southeastR][southeastC])
 
 
     if (matrix[cr][cc] == 'SW'):
@@ -114,6 +115,28 @@ def successor(cr,cc,matrix,successors,visited):
                         print(southwestR,southwestC)
                         successors.append(matrix[southwestR][southwestC])
 
+def leafcheck(cr,cc,successors):
+    if len(successor) == 0:
+        return true
+
+# this is important to convert the successors states from locations to values in maze
+def convert(maze,successors):
+    listl = []
+    for i in successors:
+        listl.append((maze[i[0]][i[1]]))
+    return(listl)
+
+#creating a depth first function
+def dfs(cr ,cc, maze, successors,path,visited):
+    current = maze[cr][cc]
+    successors = successor(cr,cc,maze,visited)
+
+# current state  
+# add the current state in visited(location), add current state in path(location)
+# showing its sucessors 
+# add the successors to the path 
+# going through one successor
+# 
 
 #----------------------------------------------------------
 
@@ -121,10 +144,18 @@ def successor(cr,cc,matrix,successors,visited):
 
 
 #main function
+#initializing variables
 maze = create()
-#dynamic path that only considers the nodes that has branches
 path = []
 visited = []
 successors = []
-successor(1,1,maze,successors,visited)
+
+
+
+successor(0,0,maze,successors,visited)
 print(successors)
+
+templist = convert(maze,successors)
+print(templist)
+
+
