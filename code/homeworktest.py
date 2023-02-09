@@ -99,10 +99,10 @@ def dfs(cr,cc,maze):
             continue
         visited.append(curr)
         if (maze[curr[0]][curr[1]]) == 'F':
-            return path, cost
+            return path, (len(path)-1)
         for next_pos, next_steps in successor(curr[0],curr[1],maze):
             stack.append((next_pos, path + [next_pos], cost + next_steps))
-    return [],0
+    return [],(len(path)-1)
  
 #-------------------------- main --------------------------------------------------
 
