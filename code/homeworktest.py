@@ -103,8 +103,38 @@ def dfs(cr,cc,maze):
         for next_pos, next_steps in successor(curr[0],curr[1],maze):
             stack.append((next_pos, path + [next_pos], cost + next_steps))
     return [],(len(path)-1)
- 
-#-------------------------- main --------------------------------------------------
 
+
+def bfs(cr,cc,maze):
+    start2 = ([cr,cc])
+    visited2 = []
+    queue = [[start2,0]]
+    while queue:
+        current = queue.pop(0)
+        print (current)
+        if current in visited2:
+            continue
+        if (maze[current[0]][current[1]]) == 'F':
+            return True
+        for neighbor,cost in successor(current[0],current[1],maze):
+            print(neighbor:1)
+    return False
+
+
+
+        #if maze[[curr[0]][curr[1]] == 'F':
+        #    print(path)
+        #for neighour,next_step in successor(curr[0],curr[1],maze):
+        #    queue.append((neighbor, path + [neighbor], cost))
+    #return [],(len(path)-1)
+
+
+
+
+
+#------------------------------main--------------------------------
+from collections import defaultdict 
 maze = create()
 print(dfs(0,0,maze))
+print("--------------------------------------- ")
+bfs(0,0,maze)
