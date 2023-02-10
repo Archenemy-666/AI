@@ -108,17 +108,17 @@ def dfs(cr,cc,maze):
 def bfs(cr,cc,maze):
     start2 = ([cr,cc])
     visited2 = []
-    queue = [[start2,0]]
+    queue = [[start2,[start2],0]]
     while queue:
-        current = queue.pop(0)
+        current,path2,cost2 = queue.pop(0)
         print (current)
         if current in visited2:
             continue
         if (maze[current[0]][current[1]]) == 'F':
-            return True
-        for neighbor,cost in successor(current[0],current[1],maze):
-            print(neighbor:1)
-    return False
+            return path2, (len(path2)-1)
+        for neighbor,cost2 in successor(current[0],current[1],maze):
+            queue.append((neighbor, path2 + [neighbor], cost2))
+    return [],(len(path2)-1)
 
 
 
@@ -137,4 +137,4 @@ from collections import defaultdict
 maze = create()
 print(dfs(0,0,maze))
 print("--------------------------------------- ")
-bfs(0,0,maze)
+print(bfs(0,0,maze))
