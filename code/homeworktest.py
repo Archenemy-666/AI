@@ -83,7 +83,7 @@ def create():
     #input matrix size 
     size = int(input("enter the size of square matrix: \n"))
     maze = []
-    print("please enter the maze in a row-wise pattern: \n")
+    print("please enter the maze in a row wise pattern")
     for i in range (size):
         elements = list(map(str, input().split()))
         maze.append(elements) 
@@ -121,10 +121,29 @@ def bfs(cr,cc,maze):
             queue.append((neighbor, path2 + [neighbor], cost2))
     return [],(len(path2)-1)
 
+def iterative_deepening(cr,cc,maze,depth,path,visited):
+    curr3 = ([cr,cc])
+    if depth == 0:
+        return None
+    if curr3 in visited:
+        return None
+    visited.append(curr3)
+    if (maze[curr3[0]][curr3[1]]) == 'F':
+        return path + [curr3]
+    for neighbor,cost in successor(curr3[0],curr3[1],maze):
+        result = iterative_deepening(neighbor[0],neighbor[1],maze,depth,path+[curr3],visited)
+        if result is not None:
+            return result
+    return None
 
-
-
-
+def solve_iter(cr,cc,maze):
+    visited = []
+    for depth in range (1, len(maze) * len(maze[0]) + 1):
+        result = iterative_deepening(cr ,cc ,maze,depth,[],visited)
+        if result is not None:
+            return result
+    return None
+    
 
 
 
@@ -138,11 +157,23 @@ if len(dfs_path) != 0:
 else: 
     print("no bfs solution")
 
-print("--------------------------------------- ")
+print("--------------------------------------- \n ")
 
 bfs_path, bfs_cost = bfs(0,0,maze)
 if len(bfs_path) != 0:
     print("bfs path : ",bfs_path)
     print("bfs cost : ",bfs_cost)
 else:
-    print("no dfs solution")
+    print("no bfs solution")
+
+
+
+print("--------------------------------------- \n ")
+
+idl_path = solve_iter(0,0,maze)
+if len(idl_path) != 0:
+    print("iterative deepening learning path : ",idl_path)
+    print("iterative deepening learning cost : ",(len(idl_path)-1))
+else:
+    print("no iterative deepening solution")
+
