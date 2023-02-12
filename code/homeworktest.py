@@ -41,7 +41,7 @@ def successor(cr,cc,matrix):
                     northeastC = cc + tr
                     steps += 1
                     if northeastR in range (0,len(matrix)) and northeastC in range (0,len(matrix)):
-                        successors.append(([northeastR,northEastC],steps)) 
+                        successors.append(([northeastR,northeastC],steps)) 
                         #successors.append(matrix[NorthEastR][NorthEastC])
 
     if (matrix[cr][cc] == 'NW'):
@@ -83,6 +83,7 @@ def create():
     #input matrix size 
     size = int(input("enter the size of square matrix: \n"))
     maze = []
+    print("please enter the maze in a row-wise pattern: \n")
     for i in range (size):
         elements = list(map(str, input().split()))
         maze.append(elements) 
@@ -94,7 +95,7 @@ def dfs(cr,cc,maze):
     stack  = [(start,[start], 0)]
     while stack:
         curr , path , cost = stack.pop()
-        print(curr)
+        # print(curr)
         if curr in visited:
             continue
         visited.append(curr)
@@ -111,9 +112,9 @@ def bfs(cr,cc,maze):
     queue = [[start2,[start2],0]]
     while queue:
         current,path2,cost2 = queue.pop(0)
-        print (current)
         if current in visited2:
             continue
+        visited2.append(current)
         if (maze[current[0]][current[1]]) == 'F':
             return path2, (len(path2)-1)
         for neighbor,cost2 in successor(current[0],current[1],maze):
@@ -122,11 +123,6 @@ def bfs(cr,cc,maze):
 
 
 
-        #if maze[[curr[0]][curr[1]] == 'F':
-        #    print(path)
-        #for neighour,next_step in successor(curr[0],curr[1],maze):
-        #    queue.append((neighbor, path + [neighbor], cost))
-    #return [],(len(path)-1)
 
 
 
@@ -135,6 +131,18 @@ def bfs(cr,cc,maze):
 #------------------------------main--------------------------------
 from collections import defaultdict 
 maze = create()
-print(dfs(0,0,maze))
+dfs_path, dfs_cost = dfs(0,0,maze)
+if len(dfs_path) != 0:
+    print("dfs path : ",dfs_path)
+    print("dfs cost : ",dfs_cost)
+else: 
+    print("no bfs solution")
+
 print("--------------------------------------- ")
-print(bfs(0,0,maze))
+
+bfs_path, bfs_cost = bfs(0,0,maze)
+if len(bfs_path) != 0:
+    print("bfs path : ",bfs_path)
+    print("bfs cost : ",bfs_cost)
+else:
+    print("no dfs solution")
