@@ -115,7 +115,7 @@ def successor(cr,cc,matrix,successors,visited):
                     southwestR = cr + tr
                     southwestC = cc - tr
                     if southwestR in range (0,len(matrix)) and southwestC in range (0,len(matrix)):
-                        print(matrix[southwestR][southwestC])
+                        #print(matrix[southwestR][southwestC])
                         #successors.append(matrix[southwestR][southwestC])
                         successors.append([southwestR,southwestC])        
                 
@@ -132,48 +132,18 @@ def convert(maze,successors):
 
 #creating a depth first function
 def dfs(cr,cc,maze,successors,visited):
-    #adding current marker
+    #adding current marker 
     current = ([cr,cc])
-    #adding current to visited
-    visited.append(current)
-    successors.append(current)
-    if len(successors) != 0:
+    if current in visited:
+        print("hello")
+        temp = successors.pop()
         print(successors)
-        child = successors.pop()
-        print(child[0],child[1])
-    #calling successor function to add child nodes to successors 
-        successor(child[0],child[1],maze,successors,visited)
-        print(successors)
-        if len(successors) != 0:
-            child = successors.pop()
-            if child in visited :
-                #if loop and visited do not append but pop the other and perform successor
-                child = successors.pop()
-                dfs(child[0],child[1],maze,successors,visited)
-                #successor(child[0],child[1],maze,successors,visited)
-        print(successors)
-        return successors
-
-    #picking the node that is last in the stack i.e. DFS
-    #checking if successor stack is empty
-
-#    if len(successors) != 0:
-#        child = successors.pop()
-#        if  (maze[child[0]][child[1]]) == 'F':
-#            visited.append(child)
-#            print(visited)
-#            return successors
-#        successor(child[0],child[1],maze,successors,visited)
-#    print(visited)
-#    return successors
-
-# current state  
-# add the current state in visited(location), add current state in path(location)
-# showing its sucessors 
-# add the successors to the path 
-# going through one successor
-# 
-
+        visited.append(temp)
+        successor(temp[0],temp[1],maze,successors,visited)
+    print(successors)
+    child = successors.pop()
+    dfs(child[0],child[1],maze,successors,visited)
+    
 #----------------------------------------------------------
 
 #function to check if the child 
@@ -186,7 +156,7 @@ path = []
 visited = []
 successors = []
 
-dfs(2,0,maze,successors,visited)
+dfs(0,0,maze,successors,visited)
 #successor(0,0,maze,successors,visited)
 #print(successors)
 
