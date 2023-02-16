@@ -136,7 +136,7 @@ def create():
     #input matrix size 
     size = int(input("enter the size of square matrix: \n"))
     maze = []
-    print("please enter the maze in a row wise pattern")
+    print("please enter the maze in a row wise pattern: \n")
     for i in range (size):
         elements = list(map(str, input().split()))
         maze.append(elements) 
@@ -148,8 +148,6 @@ def dfs(cr,cc,maze):
     stack = [(start,[start],0)]
     while stack:
         curr, path, cost = stack.pop()
-        print(curr,path)
-        print("len of path: ",len(path))
         if curr in visited:
             continue
         visited.append(curr)
@@ -166,35 +164,9 @@ def dfs(cr,cc,maze):
            #     print("hi",next_pos,next_pos)
     return [],10 
 
-
-
-#def dfs(cr,cc,maze):
-#    flip = False
-#    start = ([cr,cc,flip])
-#    visited = []
-#    stack  = [(start,[start], 0 )]
-#    while stack:
-#        curr , path , cost = stack.pop()
-#        # print(curr)
-#        if (curr) in visited:
-#            continue
-#        visited.append(curr)
-#        print(curr[0], curr[1])
-#        if (maze[curr[0]][curr[1]]) == 'F':
-#            return path, (len(path)-1)
-#        if len(path) == 1:
-#            for next_pos, next_steps in successor(curr[0],curr[1],maze,curr[2]):
-#                stack.append((next_pos, path + [next_pos], cost + next_steps))
-#        elif len(path) > 1:
-#            parentloc = (len(path)-1)
-#            if (path[parentloc][2]) == False:
-#                flip = True
-#                for next_pos, next_steps in successor(curr[0],curr[1],maze,flip):
-#                    stack.append((next_pos, path + [next_pos], cost + next_steps))
-#    return [],(len(path)-1)
-
 def bfs(cr,cc,maze):
-    start2 = ([cr,cc])
+    flip = False
+    start2 = ([cr,cc,flip])
     visited2 = []
     queue = [[start2,[start2],0]]
     while queue:
@@ -204,8 +176,13 @@ def bfs(cr,cc,maze):
         visited2.append(current)
         if (maze[current[0]][current[1]]) == 'F':
             return path2, (len(path2)-1)
-        for neighbor,cost2 in successor(current[0],current[1],maze):
-            queue.append((neighbor, path2 + [neighbor], cost2))
+        if (len(path2) == 1):
+            for neighbor,cost2 in successor(current[0],current[1],maze,flip):
+                queue.append((neighbor, path2 + [neighbor], cost2))
+        elif(len(path2) > 1):
+            flip = current[2]
+            for neighbor,cost2 in successor(current[0],current[1],maze,flip):
+                queue.append((neighbor, path2 + [neighbor],cost2))
     return [],(len(path2)-1)
 
 def iterative_deepening(cr,cc,maze,depth,path,visited):
@@ -228,38 +205,46 @@ def solve_iter(cr,cc,maze):
     for depth in range (1, len(maze) * len(maze[0]) + 1):
         result = iterative_deepening(cr ,cc ,maze,depth,[],visited)
         if result is not None:
-            return result
-    return None
-    
-
-
-
-#------------------------------main--------------------------------
+            return result, (len(result)-1)
+    return None,0
+#-----------------------------main--------------------------------
 from collections import defaultdict 
 maze = create()
 dfs_path, dfs_cost = dfs(0,0,maze)
 if len(dfs_path) != 0:
+    directionListdfs = []
+    for i in dfs_path:
+        directionListdfs.append(maze[i[0]][i[1]])
     print("dfs path : ",dfs_path)
+    print("dfs path : ",directionListdfs)
     print("dfs cost : ",dfs_cost)
 else: 
     print("no dfs solution")
 
 print("--------------------------------------- \n ")
 
-#bfs_path, bfs_cost = bfs(0,0,maze)
-#if len(bfs_path) != 0:
-#    print("bfs path : ",bfs_path)
-#    print("bfs cost : ",bfs_cost)
-#else:
-#    print("no bfs solution")
+bfs_path, bfs_cost = bfs(0,0,maze)
+if len(bfs_path) != 0:
+    bfsdirectionList = []
+    for i in bfs_path:
+        bfsdirectionList.append(maze[i[0]][i[1]])
+    print("bfs path : ",bfs_path)
+    print("bfs path : ",bfsdirectionList)
+    print("bfs cost : ",bfs_cost)
+else:
+    print("no bfs solution")
 
 
 
 print("--------------------------------------- \n ")
 
-#idl_path = solve_iter(0,0,maze)
-#if len(idl_path) != 0:
-#    print("iterative deepening learning path : ",idl_path)
-#    print("iterative deepening learning cost : ",(len(idl_path)-1))
-#else:
-#    print("no iterative deepening solution")
+idl_path,cost = solve_iter(0,0,maze)
+if idl_path is None:
+    print("no iterative deepening")
+else:
+    directionList = []
+    for i in idl_path:
+        directionList.append(maze[i[0]][i[1]])
+    print("iterative deepening learning path : ",idl_path)
+    print("iterative deepening learning path : ",directionList)
+    print("iterative deepening learning cost : ",cost)
