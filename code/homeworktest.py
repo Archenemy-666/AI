@@ -141,8 +141,8 @@ def solve_iter(cr,cc,maze):
     for depth in range (1, len(maze) * len(maze[0]) + 1):
         result = iterative_deepening(cr ,cc ,maze,depth,[],visited)
         if result is not None:
-            return result
-    return None
+            return result, (len(result)-1)
+    return None,0
     
 
 
@@ -152,28 +152,39 @@ from collections import defaultdict
 maze = create()
 dfs_path, dfs_cost = dfs(0,0,maze)
 if len(dfs_path) != 0:
+    directionListdfs = []
+    for i in dfs_path:
+        directionListdfs.append(maze[i[0]][i[1]])
     print("dfs path : ",dfs_path)
+    print("dfs path : ",directionListdfs)
     print("dfs cost : ",dfs_cost)
 else: 
-    print("no bfs solution")
+    print("no dfs solution")
 
 print("--------------------------------------- \n ")
 
 bfs_path, bfs_cost = bfs(0,0,maze)
 if len(bfs_path) != 0:
+    bfsdirectionList = []
+    for i in bfs_path:
+        bfsdirectionList.append(maze[i[0]][i[1]])
     print("bfs path : ",bfs_path)
+    print("bfs path : ",bfsdirectionList)
     print("bfs cost : ",bfs_cost)
 else:
     print("no bfs solution")
 
-
-
 print("--------------------------------------- \n ")
 
-idl_path = solve_iter(0,0,maze)
-if len(idl_path) != 0:
-    print("iterative deepening learning path : ",idl_path)
-    print("iterative deepening learning cost : ",(len(idl_path)-1))
+idl_path,cost = solve_iter(0,0,maze)
+if idl_path is None:
+     print("no iterative deepening solution")
 else:
-    print("no iterative deepening solution")
+#creating path in terms of directions
+    directionList = []
+    for i in idl_path:
+        directionList.append(maze[i[0]][i[1]])
+    print("iterative deepening learning path : ",idl_path)
+    print("iterative deepening learning path : ",directionList)
+    print("iterative deepening learning cost : ",cost)
 
