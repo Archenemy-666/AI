@@ -88,14 +88,17 @@ def dfs(cr,cc,maze):
     successors.append(start)
     while successors:
         curr = successors.pop()
+        path = curr
         print(curr)
         if curr in visited:
             continue
         visited.append(curr)
         print(maze[curr[0]][curr[1]])
         if (maze[curr[0]][curr[1]]) == 'F':
-            return True
+            return 
         print(successor(curr[0],curr[1],maze,successors))
+        for i in (successor(curr[0],curr[1],maze,successors)):
+            print (path + [i])
     return False
  
 #-------------------------- main --------------------------------------------------
